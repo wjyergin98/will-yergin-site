@@ -15,12 +15,13 @@ function Nav() {
           Will Yergin
         </Link>
         <div className="flex items-center gap-4 text-sm text-neutral-700">
-          <Link className="hover:text-neutral-900" href="/projects">Projects</Link>
-          <Link className="hover:text-neutral-900" href="/resume">Resume</Link>
-          <Link className="hover:text-neutral-900" href="/about">About</Link>
-          <Link className="hover:text-neutral-900" href="/contact">Contact</Link>
+          <Link className="hover:text-marina transition-colors" href="/projects">Projects</Link>
+          <Link className="hover:text-marina transition-colors" href="/resume">Resume</Link>
+          <Link className="hover:text-marina transition-colors" href="/about">About</Link>
+          <Link className="hover:text-marina transition-colors" href="/contact">Contact</Link>
         </div>
       </div>
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-marina to-transparent" />
     </nav>
   );
 }

@@ -3,13 +3,18 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  --marina: #74b5df;
+  --lava: #ff2600;
 }
 
-html, body {
-  height: 100%;
+/* Subtle, branded text selection */
+::selection {
+  background: var(--marina);
+  color: #000;
 }
 
-body {
-  @apply bg-white text-neutral-900;
+/* Better keyboard focus across the site */
+:focus-visible {
+  outline: 2px solid var(--marina);
+  outline-offset: 3px;
 }
