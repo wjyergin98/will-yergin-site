@@ -19,8 +19,11 @@ Open http://localhost:3000
 - Vercel: import the GitHub repo and deploy. Default settings work.
 - Alternatively: Cloudflare Pages (Next.js preset).
 
-## Updating content
+## Content updates
 
-- Edit `src/content/projects.ts` for project cards.
-- Add project media under `public/projects/<slug>/...`
-- Resume is served from `public/WilliamJYerginResume.pdf`
+- Project index data: `src/content/projects.ts`
+- Homepage featured media: `src/content/featuredSlides.ts`
+- Project pages (static routes): `src/app/projects/<slug>/page.tsx`
+- Project media: `public/projects/<slug>/*.png`
+- Resume: `public/WilliamJYerginResume.pdf`
+
