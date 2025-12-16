@@ -1,4 +1,6 @@
 import Link from "next/link";
+import FeaturedCarousel from "@/components/FeaturedCarousel";
+import { featuredSlides } from "@/content/featuredSlides";
 
 export default function HomePage() {
   return (
@@ -72,6 +74,11 @@ export default function HomePage() {
           Explore the work
         </Link>
       </div>
+
+      {/* DIVIDER */}
+      <div className="my-16 h-px w-full bg-gradient-to-r from-transparent via-lava to-transparent" />
+      {/* SLIDE CAROUSEL */}
+      <FeaturedCarousel slides={featuredSlides} />
     </main>
   );
 }
