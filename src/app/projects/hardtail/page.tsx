@@ -28,15 +28,15 @@ function StatCard(props: { label: string; value: string; note?: string; accent?:
 
 export default function HardtailPage() {
   const media = [
-    { src: "/projects/hardtail/hardtailproto.png", cap: "Prototype — early mechanism and integration concept" },
-    { src: "/projects/hardtail/hardtailinstore.png", cap: "In-store deployment — installed and evaluated in real conditions" },
-    { src: "/projects/hardtail/hardtailhardened.png", cap: "Hardened build — improved robustness and serviceability" },
+    { src: "/projects/hardtail/hardtailproto.png", cap: "Prototype — early integration and sensing concept" },
+    { src: "/projects/hardtail/hardtailinstore.png", cap: "In-store pilot — Walmart Neighborhood Market (Bentonville, AR)" },
+    { src: "/projects/hardtail/hardtailhardened.png", cap: "Hardened build — improved robustness and serviceability for pilot ops" },
   ];
 
   return (
     <ProjectLayout
       title="Project Hardtail"
-      oneLiner="Product design engineering for a shrink-reduction pilot—mechanism development, field hardening, and store deployment."
+      oneLiner="Product design engineering for a multi-signal scan-and-go shrink-reduction pilot in a live Walmart Neighborhood Market."
     >
       {/* HERO */}
       <section className={SECTION_ACCENT}>
@@ -44,30 +44,30 @@ export default function HardtailPage() {
           <div>
             <h2 className="text-lg font-semibold">
               Mechanical-forward case study{" "}
-              <span className="font-semibold text-marina">from prototype to pilot hardware</span>
+              <span className="font-semibold text-marina">prototype → field pilot hardware</span>
             </h2>
 
             <p className="pt-2 text-neutral-700">
-              Hardtail focused on reducing shrink by introducing a durable, store-ready physical solution that could be
-              deployed quickly and iterated under real retail constraints. My work emphasized product design engineering:
-              mechanism development, integration, field hardening, and serviceability.
+              Hardtail was a pilot unit installed at a Walmart Neighborhood Market in Bentonville, AR to reduce{" "}
+              <span className="font-semibold">scan-and-go shrink</span> by reducing{" "}
+              <span className="font-semibold">accidental missed scans.</span>
             </p>
 
             <div className="pt-4">
               <div className="text-sm font-semibold text-neutral-900">My role</div>
               <p className="pt-1 text-neutral-700">
-                <span className="font-semibold">Product Design Engineer (Mechanical / Systems)</span> — owned mechanical
-                architecture and iteration loop from prototype builds through pilot-ready hardware; coordinated fabrication
-                and deployment support while partnering with cross-functional teams to ensure reliability in-store.
+                <span className="font-semibold">Product Design Engineer (Mechanical / Systems)</span> — owned the physical
+                architecture and integration of a multi-signal platform (sensing, compute, enclosure, mounting, and
+                serviceability), supporting rapid iteration and in-store pilot operations.
               </p>
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              <span className={TAG}>Mechanism design</span>
+              <span className={TAG}>Hardware systems integration</span>
               <span className={TAG}>DFM + serviceability</span>
               <span className={TAG}>Field hardening</span>
               <span className={TAG}>Pilot deployment</span>
-              <span className={TAG}>Vendor & fabrication</span>
+              <span className={TAG}>Multi-signal sensing</span>
             </div>
           </div>
 
@@ -89,31 +89,38 @@ export default function HardtailPage() {
       <section className={SECTION}>
         <h2 className="text-lg font-semibold">Outcomes</h2>
         <p className="pt-2 text-neutral-700">
-          The objective was to deliver a mechanically reliable pilot that generated clear shrink-reduction signal in real
-          store conditions—without adding operational friction.
+          The goal was to deliver a mechanically reliable pilot that could reconcile a customer’s digital basket with the
+          physical cart state and provide clear shrink-reduction signal in real store conditions.
         </p>
 
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <StatCard label="Shrink reduction signal" value="~17% ↓" note="pilot estimate / observed impact" accent="lava" />
-          <StatCard label="Pilot readiness" value="Field-hardened" note="robustness + maintainability upgrades" accent="marina" />
-          <StatCard label="Deployment mode" value="In-store pilot" note="validated under real constraints" />
+          <StatCard
+            label="Shrink reduction (Scan & Go)"
+            value="~17% ↓"
+            note="pilot result at Neighborhood Market"
+            accent="lava"
+          />
+          <StatCard
+            label="Primary shrink type"
+            value="Accidental"
+            note="missed scans / unintentional"
+            accent="marina"
+          />
+          <StatCard
+            label="Pilot location"
+            value="Bentonville, AR"
+            note="Walmart Neighborhood Market"
+          />
         </div>
-
-        {/*<div className="mt-4 rounded-2xl border border-neutral-200 bg-white p-4">
-          <div className="text-sm font-semibold text-neutral-900">Note</div>
-          <p className="pt-1 text-neutral-700">
-            If you’d like, we can tighten the wording around the ~17% figure (e.g., “estimated” vs “measured”) to match how
-            you want to present confidence and attribution.
-          </p>
-        </div>*/}
       </section>
 
       {/* OBJECTIVE */}
       <section className={SECTION}>
         <h2 className="text-lg font-semibold">Objective</h2>
         <p className="pt-2 text-neutral-700">
-          Design and deploy a mechanically robust shrink-reduction solution that could be installed in existing retail
-          environments, withstand continuous use, and provide actionable pilot data.
+          Build and deploy a store-ready, multi-signal hardware platform that could determine a customer’s basket with high
+          confidence, compare the digital basket to the physical cart state, and define exit criteria to reduce scan-and-go
+          shrink—without adding operational friction.
         </p>
       </section>
 
@@ -121,10 +128,41 @@ export default function HardtailPage() {
       <section className={SECTION}>
         <h2 className="text-lg font-semibold">Context</h2>
         <p className="pt-2 text-neutral-700">
-          Shrink is driven by a combination of human behavior, process gaps, and store-level operational realities. Hardtail
-          targeted a practical intervention—one that could be physically deployed, evaluated, and iterated quickly—without
-          requiring major infrastructure changes.
+          Scan-and-go improves customer convenience, but it introduces a persistent failure mode: items can be missed during
+          scanning. Hardtail was designed to close that gap by validating whether the cart contents matched what the customer
+          scanned—supporting a smoother customer experience while reducing unintentional shrink.
         </p>
+      </section>
+
+      {/* SYSTEM OVERVIEW (your “mechanism” made explicit) */}
+      <section className={SECTION_ACCENT}>
+        <h2 className="text-lg font-semibold">
+          Multi-signal platform <span className="text-marina">and “brain”</span>
+        </h2>
+        <p className="pt-2 text-neutral-700">
+          Hardtail used a multi-sensor approach—similar in spirit to Gulfstream, but tuned for scan-and-go validation rather
+          than full checkout—combining identity, perception, and rule enforcement to determine exit criteria.
+        </p>
+
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="rounded-2xl border border-neutral-200 bg-white p-4">
+            <div className="font-semibold text-neutral-900">Signals</div>
+            <ul className="pt-2 space-y-2 text-neutral-700">
+              <li>• RFID + camera vision for cart-state and item presence</li>
+              <li>• Symbology recognition to interpret labels / identifiers</li>
+              <li>• Bluetooth handshake between customer phone and Hardtail for session association</li>
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border border-neutral-200 bg-white p-4">
+            <div className="font-semibold text-neutral-900">Decisioning</div>
+            <ul className="pt-2 space-y-2 text-neutral-700">
+              <li>• Basket association (digital cart ↔ physical cart)</li>
+              <li>• Exit criteria evaluation using a rules-based + ML decision layer</li>
+              <li>• Designed to reduce false positives and avoid customer friction</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       {/* CONSTRAINTS */}
@@ -132,21 +170,21 @@ export default function HardtailPage() {
         <h2 className="text-lg font-semibold">Constraints</h2>
         <ul className="pt-2 space-y-2 text-neutral-700">
           <li>• Live store environment with continuous public interaction</li>
-          <li>• Minimal disruption to store operations and staff workflows</li>
-          <li>• Existing fixtures and layouts; limited tolerance for “special installs”</li>
-          <li>• High durability and serviceability requirements</li>
-          <li>• Tight pilot timelines with fast iteration cycles</li>
+          <li>• Minimal disruption to store operations and associate workflows</li>
+          <li>• Must integrate with existing store layouts and customer scan-and-go behavior</li>
+          <li>• High durability, safety, and serviceability expectations</li>
+          <li>• Environmental variability impacting perception and RF behavior</li>
         </ul>
       </section>
 
-      {/* SPRINKLED MEDIA: prototype */}
+      {/* PROTOTYPE MEDIA */}
       <section className={SECTION_ACCENT}>
         <h2 className="text-lg font-semibold">
-          Prototype development <span className="text-marina">and mechanism iteration</span>
+          Prototype development <span className="text-marina">and integration iteration</span>
         </h2>
         <p className="pt-2 text-neutral-700">
-          Early builds focused on proving the mechanism and integration approach, then converging toward a design that could
-          be fabricated quickly and serviced easily during pilot operations.
+          Early builds focused on integration feasibility and signal quality—ensuring sensors, compute, and mounting
+          geometry were stable and serviceable enough to survive store operations and produce trustworthy pilot data.
         </p>
 
         <figure className="mt-4 space-y-2">
@@ -165,20 +203,18 @@ export default function HardtailPage() {
       <section className={SECTION}>
         <h2 className="text-lg font-semibold">Approach</h2>
         <ul className="pt-2 space-y-2 text-neutral-700">
-          <li>• Defined mechanical requirements from store constraints (mounting, footprint, safety, service access)</li>
-          <li>• Developed and iterated mechanism concepts with a bias toward durability and repeatable assembly</li>
-          <li>• Implemented field-hardening changes based on real store interaction and failure modes</li>
-          <li>• Coordinated fabrication and deployment logistics with partners to support rapid iteration</li>
-          <li>• Supported installation, evaluation, and ongoing improvements during the pilot</li>
+          <li>• Defined hardware and mechanical requirements from store constraints (footprint, mounting, safety, service access)</li>
+          <li>• Integrated sensing + compute into a maintainable architecture</li>
+          <li>• Tuned physical geometry to support stable perception and consistent signal quality</li>
         </ul>
       </section>
 
-      {/* SPRINKLED MEDIA: hardened */}
+      {/* HARDENED MEDIA */}
       <section className={SECTION}>
         <h2 className="text-lg font-semibold">Field hardening</h2>
         <p className="pt-2 text-neutral-700">
-          Later iterations prioritized robustness and maintainability—reducing failure points, improving service access, and
-          making the build more repeatable for deployment.
+          Later iterations focused on robustness and maintainability: reducing failure points, improving service access, and
+          making the build more repeatable for sustained in-store operation.
         </p>
 
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -194,17 +230,15 @@ export default function HardtailPage() {
           </figure>
 
           <div className="rounded-2xl border border-neutral-200 bg-white p-4">
-            <div className="text-sm font-semibold text-neutral-900">What “hardened” meant in practice</div>
+            <div className="text-sm font-semibold text-neutral-900">What improved in the hardened build</div>
             <ul className="pt-2 space-y-2 text-neutral-700">
-              <li>• More robust mounting / interfaces for repeated use</li>
-              <li>• Fewer failure points and clearer service access</li>
-              <li>• Improved repeatability for fabrication and assembly</li>
-              <li>• Better fit within store operational constraints</li>
+              <li>• More robust interfaces and mounting for repeated public interaction</li>
+              <li>• Service access for quick in-store troubleshooting</li>
+              <li>• Improved DFM for fabrication and assembly</li>
+              <li>• Better alignment between physical geometry and sensing performance</li>
+              <li>• Hardened the design based on anticipated pilot wear, failure modes, and servicing needs</li>
+              <li>• Insulated wiring with RF resistant lining for decreased signal noise</li>
             </ul>
-            <p className="pt-3 text-neutral-700">
-              If you want, we can replace these bullets with the specific hardening changes you actually made (even 3–5 items
-              will make this section feel “real” to a hiring manager).
-            </p>
           </div>
         </div>
       </section>
@@ -215,30 +249,31 @@ export default function HardtailPage() {
 
         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-neutral-200 p-4">
-            <div className="font-semibold text-neutral-900">Mechanism Design</div>
+            <div className="font-semibold text-neutral-900">Hardware Integration</div>
             <p className="pt-1 text-neutral-700">
-              Developed and iterated physical solutions optimized for durability, repeatable assembly, and safe public interaction.
+              Integrated sensing, compute, and enclosure architecture into a store-ready unit, balancing robustness with
+              serviceability.
             </p>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 p-4">
-            <div className="font-semibold text-neutral-900">DFM + Serviceability</div>
+            <div className="font-semibold text-neutral-900">Mechanical Design for Field Use</div>
             <p className="pt-1 text-neutral-700">
-              Balanced rapid prototyping with production-aware decisions to improve deployment repeatability and maintenance.
+              Designed for durability, safe public interaction, and fast maintenance in a live retail environment.
             </p>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 p-4">
-            <div className="font-semibold text-neutral-900">Field Testing</div>
+            <div className="font-semibold text-neutral-900">System Reliability</div>
             <p className="pt-1 text-neutral-700">
-              Designed for real-world constraints and iterated based on observed failure modes in uncontrolled environments.
+              Supported stable signal quality through physical geometry choices and iteration based on observed failure modes.
             </p>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 p-4">
             <div className="font-semibold text-neutral-900">Pilot Execution</div>
             <p className="pt-1 text-neutral-700">
-              Coordinated fabrication and deployment details so the hardware could be installed, evaluated, and improved quickly.
+              Delivered pilot-ready hardware and supported deployment/iteration loops to generate measurable shrink reduction.
             </p>
           </div>
         </div>
@@ -246,7 +281,7 @@ export default function HardtailPage() {
         <div className="mt-5 rounded-2xl border border-neutral-200 bg-white p-4">
           <div className="text-sm font-semibold text-neutral-900">One-line takeaway</div>
           <p className="pt-1 text-neutral-700">
-            I design and harden mechanisms that survive real environments and produce measurable operational impact.
+            I design multi-signal retail hardware that is durable, serviceable, and capable of producing measurable real-world impact.
           </p>
         </div>
       </section>
