@@ -15,7 +15,7 @@ export const featuredSlides: FeaturedSlide[] = [
     accent: "marina",
   },
   {
-    src: "/projects/hardtail/hardtail.png",
+    src: "/projects/hardtail/hardtailinstore.png",
     alt: "Project Hardtail pilot unit",
     title: "Hardtail",
     href: "/projects/hardtail",
