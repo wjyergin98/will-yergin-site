@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FeaturedSlide } from "@/content/featuredSlides";
 
 function cx(...classes: Array<string | false | undefined>) {
@@ -16,22 +16,107 @@ export default function FeaturedCarousel({
   slides: FeaturedSlide[];
   intervalMs?: number;
 }) {
-  const [idx, setIdx] = useState(0);
   const n = slides.length;
 
-  const safeIdx = ((idx % n) + n) % n;
-  const active = slides[safeIdx];
+  // We keep the rendered slide index separate so we can fade-out BEFORE swapping.
+  const [displayIdx, setDisplayIdx] = useState(0);
+  const [opacity, setOpacity] = useState(1);
+
+  const idxRef = useRef(0);
+  const timerRef = useRef<number | null>(null);
+  const fadeRef = useRef<number | null>(null);
+
+  const FADE_MS = 260; // slightly slower, feels more premium and avoids “flash”
+
+  const wrap = useCallback(
+    (i: number) => {
+      if (n === 0) return 0;
+      return ((i % n) + n) % n;
+    },
+    [n]
+  );
+
+  const clearAutoplay = useCallback(() => {
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const clearFade = useCallback(() => {
+    if (fadeRef.current !== null) {
+      window.clearTimeout(fadeRef.current);
+      fadeRef.current = null;
+    }
+  }, []);
+
+  const scheduleAutoplay = useCallback(() => {
+    clearAutoplay();
+    if (n <= 1) return;
+
+    timerRef.current = window.setTimeout(() => {
+      // Advance using ref to avoid stale closures
+      const next = wrap(idxRef.current + 1);
+      // Do the same transition used for manual navigation
+      setOpacity(0);
+      clearFade();
+      fadeRef.current = window.setTimeout(() => {
+        idxRef.current = next;
+        setDisplayIdx(next);
+        setOpacity(1);
+        // Critical: re-schedule after an auto-advance
+        scheduleAutoplay();
+      }, FADE_MS);
+    }, intervalMs);
+  }, [FADE_MS, clearAutoplay, clearFade, intervalMs, n, wrap]);
+
+  const transitionTo = useCallback(
+    (nextRaw: number) => {
+      if (n <= 1) return;
+
+      const next = wrap(nextRaw);
+      if (next === idxRef.current) return;
+
+      // Reset autoplay so user always gets a full interval after interacting
+      scheduleAutoplay();
+
+      // Fade out current, then swap, then fade in new
+      setOpacity(0);
+      clearFade();
+      fadeRef.current = window.setTimeout(() => {
+        idxRef.current = next;
+        setDisplayIdx(next);
+        setOpacity(1);
+      }, FADE_MS);
+    },
+    [FADE_MS, clearFade, n, scheduleAutoplay, wrap]
+  );
+
+  const goPrev = useCallback(() => transitionTo(idxRef.current - 1), [transitionTo]);
+  const goNext = useCallback(() => transitionTo(idxRef.current + 1), [transitionTo]);
+  const goTo = useCallback((i: number) => transitionTo(i), [transitionTo]);
+
+  // Start autoplay on mount; cleanup timers on unmount
+  useEffect(() => {
+    idxRef.current = wrap(displayIdx);
+    scheduleAutoplay();
+    return () => {
+      clearAutoplay();
+      clearFade();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const active = slides[wrap(displayIdx)] ?? null;
 
   const accentClass = useMemo(() => {
-    if (active.accent === "lava") return "from-lava/35 via-transparent to-transparent";
-    return "from-marina/35 via-transparent to-transparent";
-  }, [active.accent]);
+    if (!active) return "from-marina/35 via-transparent to-transparent";
+    return active.accent === "lava"
+      ? "from-lava/35 via-transparent to-transparent"
+      : "from-marina/35 via-transparent to-transparent";
+  }, [active]);
 
-  useEffect(() => {
-    if (n <= 1) return;
-    const t = setInterval(() => setIdx((v) => v + 1), intervalMs);
-    return () => clearInterval(t);
-  }, [n, intervalMs]);
+  if (!active) return null;
 
   return (
     <section className="mt-14">
@@ -44,7 +129,7 @@ export default function FeaturedCarousel({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setIdx((v) => v - 1)}
+            onClick={goPrev}
             className="rounded-lg border border-neutral-300 px-3 py-2 text-sm transition hover:border-marina"
             aria-label="Previous slide"
           >
@@ -52,7 +137,7 @@ export default function FeaturedCarousel({
           </button>
           <button
             type="button"
-            onClick={() => setIdx((v) => v + 1)}
+            onClick={goNext}
             className="rounded-lg border border-neutral-300 px-3 py-2 text-sm transition hover:border-marina"
             aria-label="Next slide"
           >
@@ -71,12 +156,16 @@ export default function FeaturedCarousel({
               priority
               sizes="(max-width: 768px) 100vw, 800px"
               className="object-contain transition-transform duration-300 group-hover:scale-[1.01]"
+              style={{
+                opacity,
+                transition: `opacity ${FADE_MS}ms ease-in-out`,
+              }}
             />
           </div>
 
           <div className="flex items-center justify-between px-5 py-4">
             <div className="font-medium">{active.title}</div>
-            <div className="text-sm text-neutral-600 group-hover:text-marina transition-colors">
+            <div className="text-sm text-neutral-600 transition-colors group-hover:text-marina">
               View project →
             </div>
           </div>
@@ -85,12 +174,12 @@ export default function FeaturedCarousel({
         {/* Dots */}
         <div className="flex items-center justify-center gap-2 pb-4">
           {slides.map((s, i) => {
-            const isActive = i === safeIdx;
+            const isActive = i === wrap(displayIdx);
             return (
               <button
                 key={s.href}
                 type="button"
-                onClick={() => setIdx(i)}
+                onClick={() => goTo(i)}
                 className={cx(
                   "h-2.5 w-2.5 rounded-full border transition",
                   isActive ? "bg-black border-black" : "bg-transparent border-neutral-300 hover:border-marina"

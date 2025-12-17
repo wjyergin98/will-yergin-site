@@ -21,6 +21,15 @@ export default function ProjectsPage() {
           </Link>
         ))}
       </div>
+      <div className="pb-6 pt-4">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 rounded-lg border border-lava/40 bg-lava/10 px-3 py-2 text-sm font-medium text-lava transition hover:border-lava hover:bg-lava/15"
+        >
+          <span aria-hidden>←</span>
+          Back to home
+        </Link>
+      </div>
     </main>
   );
 }

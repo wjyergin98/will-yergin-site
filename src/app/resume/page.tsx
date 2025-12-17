@@ -4,7 +4,7 @@ export default function ResumePage() {
       <h1 className="text-3xl font-semibold">Resume</h1>
       <p className="pt-2 text-neutral-600">
         Download:{" "}
-        <a className="hover:underline" href="/WilliamJYerginResume.pdf" target="_blank" rel="noreferrer">
+        <a className="hover:underline hover:text-marina" href="/WilliamJYerginResume.pdf" target="_blank" rel="noreferrer">
           WilliamJYerginResume.pdf
         </a>
       </p>
